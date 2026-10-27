@@ -1,0 +1,14 @@
+{
+  "schema_version": "0.1-draft",
+  "workspace_revision": 0,
+  "project_id": "replace-with-project-id",
+  "name": "New hardware project",
+  "goal": "",
+  "active_bom_revision": null,
+  "requirements": [],
+  "constraints": [],
+  "open_questions": [],
+  "stock_counts_verified": [],
+  "spare_targets": {},
+  "evidence": []
+}
