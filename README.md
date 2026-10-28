@@ -4,7 +4,7 @@ An agent-oriented workspace for starting, managing, and resuming small hardware 
 
 The goal is to let an individual maker describe what they want to build, then work with an AI agent that follows engineering practices and maintains durable project records: requirements, decisions, BOM revisions, purchases, parts locations, and prototype history. KiCad is one planned integration within that workflow.
 
-**Status: planning and project templates.** This repository does not yet contain an executable toolkit, MCP server, CAD integration, or validated hardware design. The commands and interfaces below are proposed implementation targets.
+**Status: first read-only Python slice implemented.** `project.validate` and `build.plan` work against file workspaces, with synthetic fixtures and focused tests. See [Python core usage and limits](docs/python-core.md). The wider materials loop, CLI, MCP server, CAD integration, and hardware validation remain proposals.
 
 ## The problem
 
@@ -25,7 +25,7 @@ For example: **“Build two more prototypes and keep one controller spare.”** 
 
 ## Start here
 
-The templates can be used manually today; automation comes next.
+Use the templates manually and validate or plan with the [read-only Python core](docs/python-core.md). Record mutation automation comes next.
 
 1. Copy [templates/project](templates/project) into your own project workspace.
 2. Follow the [template guide](templates/project/README.md) to fill in the records.

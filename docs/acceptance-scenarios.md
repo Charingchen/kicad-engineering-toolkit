@@ -1,6 +1,6 @@
 # Acceptance scenarios for the first implementation
 
-These are specifications for future automated tests, not passing test results. All parts and quantities here are synthetic bookkeeping examples, not a wiring or hardware recommendation.
+The first read-only slice tests the two-prototype arithmetic, incoming/partial receipt distinction, existing ledger transitions, revision selection, and invalid/unknown inputs. See [test command and scope](python-core.md). Mutation/replay, BOM editing, actual build-history preservation, and resume scenarios below remain future specifications. All parts and quantities here are synthetic bookkeeping examples, not a wiring or hardware recommendation.
 
 ## Two prototypes and a spare
 

@@ -1,6 +1,6 @@
-# Proposed architecture and records
+# Architecture and records
 
-Status: design proposal. No API or schema validator is implemented yet.
+Status: `project.validate` and read-only `build.plan` are implemented as direct Python calls. See [the implemented contract and limits](python-core.md). Other operations and transaction guarantees below remain proposals.
 
 ## Shared core
 
@@ -10,7 +10,7 @@ Begin with JSON, CSV, and Markdown records for inspection and Git review. Avoid 
 
 ## Proposed operations
 
-These are operation names, not installed commands or finalized API signatures.
+These are domain operation names, not installed commands. Only `project.validate` and `build.plan` have implemented Python signatures in this slice.
 
 | Operation | Inputs and result | Effect |
 | --- | --- | --- |
@@ -53,7 +53,7 @@ For each part and location:
 
 Reject negative balances, consumption exceeding the build's reservation, and adjustments that strand reservations. Quarantined or defective parts are outside usable stock; record their removal with a reason. Unknown initial stock is not zero verified stock: require a physical count or report an unknown before promising availability.
 
-An order is not stock. Receipt events refer to their order line in the source field; total receipts and cancellations cannot exceed the line's ordered quantity. Outstanding ordered quantity = ordered − cancelled − received. Marking an order received does not create a second receipt. Partial receipts remain explicit.
+An order is not stock. Receipt events use `order_id` plus an exact `line_id` in the source field; total receipts and cancellations cannot exceed the line's ordered quantity. Outstanding ordered quantity = ordered − cancelled − received. Marking an order received does not create a second receipt. Partial receipts remain explicit.
 
 ## Build planning
 
@@ -71,4 +71,4 @@ Mutations validate an expected workspace revision and use a unique operation ID.
 
 Each physical build pins a BOM revision and retains actual usage and test evidence. A later BOM edit cannot rewrite its history. Substitutions require an explicit mapping and engineering rationale; the planning layer cannot assume electrical equivalence. Stock depletion follows actual usage, not the nominal BOM alone.
 
-The first implementation must define locking and crash recovery for file transactions. Until then, the templates are manually maintained records, with no claim of concurrency safety.
+Before adding record writers, define locking and crash recovery for file transactions. The read-only slice assumes quiescent records and makes no claim of concurrency safety.
