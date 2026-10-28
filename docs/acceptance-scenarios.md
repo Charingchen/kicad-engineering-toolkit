@@ -1,6 +1,6 @@
 # Acceptance scenarios for the first implementation
 
-These are specifications for future automated tests, not passing test results. All parts and quantities here are synthetic bookkeeping examples, not a wiring or hardware recommendation.
+The read-only validation and planning portions now have automated tests in `tests/test_core.py`; see [Python core](python-core.md) for commands. Transaction replay, mutation workflows, and resume remain future specifications. All parts and quantities here are synthetic bookkeeping examples, not a wiring or hardware recommendation.
 
 ## Two prototypes and a spare
 
@@ -15,7 +15,11 @@ Request two additional prototypes, retaining one controller as a free spare and 
 
 The report explains that the builds have enough free parts to assemble, but the controller spare target is not met today. Receiving one incoming controller satisfies that target. Planning does not create reservations, consumption, or an order.
 
+The synthetic fixture in `tests/fixtures/materials-loop` implements these starting records. The tests assert the table, separate build readiness from the spare target, and verify that repeated plans leave record bytes and modification times unchanged.
+
 ## Partial receipt and replay
+
+Receipt arithmetic and order reconciliation are tested against manually constructed records. Recording/replaying transactions is not implemented yet.
 
 Order four controllers. Receive one under a unique operation ID. Physical stock rises by one; outstanding incoming quantity is three. Replay the identical operation: neither value changes. Reuse its ID for quantity two: reject the conflict. An over-receipt is rejected. An expected arrival date passing does not add stock.
 

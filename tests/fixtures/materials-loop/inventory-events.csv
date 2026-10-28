@@ -1,0 +1,5 @@
+event_id,operation_id,timestamp,event_type,part_id,quantity,location,build_id,order_id,source,reason
+E-1,OP-1,2026-01-01T00:00:00Z,adjustment_in,controller,3,drawer-A,,,fixture-count,synthetic initial physical count
+E-2,OP-2,2026-01-01T00:00:00Z,adjustment_in,led,6,drawer-B,,,fixture-count,synthetic initial physical count
+E-3,OP-3,2026-01-02T00:00:00Z,reserve,controller,1,drawer-A,B-existing,,fixture,
+E-4,OP-4,2026-01-02T00:00:00Z,reserve,led,2,drawer-B,B-existing,,fixture,
