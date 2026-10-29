@@ -96,3 +96,16 @@ not a concurrency guarantee. Use a stable checkout/workspace while validating or
 planning. Mutation locking and crash recovery must be implemented before writers.
 Engineering suitability, source authenticity, and physical counts remain manual
 responsibilities. No component equivalence or project-specific rules are inferred.
+
+## Combined implementation
+
+The implementation combines PR #3's installable `src` package, fingerprint,
+structured failure results, explicit order receipt references, move checks, and
+three-valued readiness with PR #2's evidence requirements and additional integrity
+scenarios. There is one public API: `kicad_engineering_toolkit`; draft imports,
+exception-based failures, and bare receipt line references are superseded.
+
+All inventory events require a nonblank evidence source. Only receipts may carry
+an order ID. IDs, locations, and adjustment reasons cannot be whitespace-only.
+The draft fixture is retained with distinct event operation IDs and a decisions
+record to meet the settled contract. Its tests use the same public API.

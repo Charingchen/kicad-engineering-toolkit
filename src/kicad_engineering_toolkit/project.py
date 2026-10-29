@@ -80,7 +80,7 @@ def _inspect(workspace):
     for field in ("project_id", "name", "goal"):
         if not isinstance(p.get(field), str):
             error("INVALID_RECORD", "project.json", f"{field} must be a string")
-    if not p.get("project_id"):
+    if not isinstance(p.get("project_id"), str) or not p["project_id"].strip():
         error("INVALID_RECORD", "project.json", "project_id is required")
     for field in ("requirements", "constraints", "open_questions", "evidence"):
         if not isinstance(p.get(field), list):
@@ -89,7 +89,7 @@ def _inspect(workspace):
     for i, row in enumerate(records["parts.csv"], 2):
         ref = f"parts.csv:{i}"
         part = row["part_id"]
-        if not part or part in parts:
+        if not part.strip() or part in parts:
             error("DUPLICATE_ID" if part else "MISSING_ID", ref, "part_id must be nonempty and unique")
         parts[part] = row
         if row["unit"] != "each" or row["verification_status"] not in {"unverified", "document_checked", "hardware_tested"}:
@@ -119,7 +119,7 @@ def _inspect(workspace):
     for i, row in enumerate(records["bom.csv"], 2):
         ref = f"bom.csv:{i}"
         key = row["bom_revision"], row["line_id"]
-        if not all(key) or key in identities:
+        if not all(x.strip() for x in key) or key in identities:
             error("DUPLICATE_ID" if key in identities else "MISSING_ID", ref, "BOM revision/line must be nonempty and unique")
         identities.add(key)
         if row["part_id"] not in parts:
@@ -149,13 +149,13 @@ def _inspect(workspace):
         build_ids.add(row["build_id"])
         if not isinstance(row.get("bom_revision"), str) or row["bom_revision"] not in bom:
             error("UNKNOWN_BOM", "builds.json", row["build_id"])
-        if row.get("status") not in {"planned", "reserved", "assembled", "tested", "retired"}:
+        if not isinstance(row.get("status"), str) or row["status"] not in {"planned", "reserved", "assembled", "tested", "retired"}:
             error("INVALID_STATUS", "builds.json", row["build_id"])
     orders = {}
     for i, row in enumerate(records["orders.csv"], 2):
         ref = f"orders.csv:{i}"
         key = row["order_id"], row["line_id"]
-        if not all(key) or key in orders:
+        if not all(x.strip() for x in key) or key in orders:
             error("DUPLICATE_ID" if key in orders else "MISSING_ID", ref, "order/line must be nonempty and unique")
         q, c = _integer(row["quantity_ordered"], 1), _integer(row["quantity_cancelled"])
         if q is None or c is None or (q is not None and c is not None and c > q):
@@ -172,11 +172,15 @@ def _inspect(workspace):
     event_ids, operations = set(), {}
     for i, row in enumerate(records["inventory-events.csv"], 2):
         ref = f"inventory-events.csv:{i}"
-        if not row["event_id"] or row["event_id"] in event_ids:
+        if not row["event_id"].strip() or row["event_id"] in event_ids:
             error("DUPLICATE_ID" if row["event_id"] in event_ids else "MISSING_ID", ref, "event_id must be nonempty and unique")
         event_ids.add(row["event_id"])
-        if not row["operation_id"]:
+        if not row["operation_id"].strip():
             error("MISSING_ID", ref, "operation_id is required")
+        if not row["source"].strip():
+            error("INVALID_RECORD", ref, "event evidence source is required")
+        if row["order_id"] and row["event_type"] != "receipt":
+            error("INVALID_RECORD", ref, "only receipts may reference orders")
         operations.setdefault(row["operation_id"], []).append(row)
         try:
             stamp = datetime.fromisoformat(row["timestamp"].replace("Z", "+00:00"))
@@ -189,7 +193,7 @@ def _inspect(workspace):
         kind = row["event_type"]
         if part not in parts:
             error("UNKNOWN_PART", ref, part)
-        if not loc:
+        if not loc.strip():
             error("MISSING_LOCATION", ref, "location is required")
         if qty is None:
             error("INVALID_QUANTITY", ref, "event quantity must be a positive integer")
@@ -210,7 +214,7 @@ def _inspect(workspace):
             h += qty
         elif kind in {"consume", "adjustment_out"}:
             h -= qty
-        if kind.startswith("adjustment_") and not row["reason"]:
+        if kind.startswith("adjustment_") and not row["reason"].strip():
             error("MISSING_REASON", ref, "adjustments require a reason")
         if h < 0 or r < 0 or h < r:
             error("NEGATIVE_BALANCE", ref, "physical/reserved/free balance would be negative")
