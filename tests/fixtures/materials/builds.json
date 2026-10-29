@@ -1,0 +1,10 @@
+{
+  "schema_version": "0.1-draft",
+  "builds": [
+    {
+      "build_id": "B-existing",
+      "bom_revision": "A",
+      "status": "reserved"
+    }
+  ]
+}

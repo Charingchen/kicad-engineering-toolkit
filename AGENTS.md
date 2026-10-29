@@ -2,7 +2,7 @@
 
 ## Purpose and current state
 
-Build a reusable, agent-oriented engineering workspace for individual makers. The wand is an example, not a special case in the core. This initial repository contains plans and manual templates only; do not describe planned operations as working features.
+Build a reusable, agent-oriented engineering workspace for individual makers. The wand is an example, not a special case in the core. The first read-only Python slice implements project.validate and build.plan with synthetic tests. Record writers, CLI, MCP, and CAD integration remain planned; do not describe them as working features.
 
 ## Working conventions
 

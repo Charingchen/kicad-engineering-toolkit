@@ -1,0 +1,3 @@
+bom_revision,line_id,part_id,quantity_per_build,reference_designators,source
+A,1,controller,1,U1,synthetic
+A,2,led,2,D1 D2,synthetic

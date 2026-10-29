@@ -1,6 +1,6 @@
 # Proposed architecture and records
 
-Status: design proposal. No API or schema validator is implemented yet.
+Status: `project.validate` and read-only `build.plan` are implemented in Python. The remaining operations and transports are proposals. See [Python core](python-core.md) for API signatures, supported checks, and settled draft record details.
 
 ## Shared core
 
@@ -10,7 +10,7 @@ Begin with JSON, CSV, and Markdown records for inspection and Git review. Avoid 
 
 ## Proposed operations
 
-These are operation names, not installed commands or finalized API signatures.
+These are shared operation names, not installed commands. Only validation and planning have implemented Python APIs in this slice.
 
 | Operation | Inputs and result | Effect |
 | --- | --- | --- |
@@ -71,4 +71,4 @@ Mutations validate an expected workspace revision and use a unique operation ID.
 
 Each physical build pins a BOM revision and retains actual usage and test evidence. A later BOM edit cannot rewrite its history. Substitutions require an explicit mapping and engineering rationale; the planning layer cannot assume electrical equivalence. Stock depletion follows actual usage, not the nominal BOM alone.
 
-The first implementation must define locking and crash recovery for file transactions. Until then, the templates are manually maintained records, with no claim of concurrency safety.
+The read-only implementation does not lock files or guarantee snapshots during concurrent manual edits. Before implementing file transactions, define locking and crash recovery. Records remain manually maintained; there is no claim of concurrency safety.

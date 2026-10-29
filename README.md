@@ -4,7 +4,7 @@ An agent-oriented workspace for starting, managing, and resuming small hardware 
 
 The goal is to let an individual maker describe what they want to build, then work with an AI agent that follows engineering practices and maintains durable project records: requirements, decisions, BOM revisions, purchases, parts locations, and prototype history. KiCad is one planned integration within that workflow.
 
-**Status: planning and project templates.** This repository does not yet contain an executable toolkit, MCP server, CAD integration, or validated hardware design. The commands and interfaces below are proposed implementation targets.
+**Status: first read-only Python core implemented.** `project.validate` and `build.plan` run against the file records, with a synthetic fixture and focused tests. Record-writing operations, CLI, MCP, CAD integration, and validated hardware designs remain planned. See the [Python core guide](docs/python-core.md) for reproducible commands and limitations.
 
 ## The problem
 
@@ -25,7 +25,7 @@ For example: **“Build two more prototypes and keep one controller spare.”** 
 
 ## Start here
 
-The templates can be used manually today; automation comes next.
+Use the templates manually and run the read-only Python operations to validate records and calculate materials plans.
 
 1. Copy [templates/project](templates/project) into your own project workspace.
 2. Follow the [template guide](templates/project/README.md) to fill in the records.
@@ -38,6 +38,7 @@ Keep personal purchasing records and proprietary project files in a private work
 
 | Path | Purpose |
 | --- | --- |
+| [docs/python-core.md](docs/python-core.md) | Implemented Python API, tests, record details, and limitations |
 | [docs/product-scope.md](docs/product-scope.md) | Target user, boundaries, and assumptions to test |
 | [docs/architecture.md](docs/architecture.md) | Shared operations, records, and planned interfaces |
 | [docs/engineering-playbook.md](docs/engineering-playbook.md) | Guidance for agent-assisted engineering |

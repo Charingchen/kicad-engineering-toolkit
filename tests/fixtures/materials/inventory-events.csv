@@ -1,0 +1,5 @@
+event_id,operation_id,timestamp,event_type,part_id,quantity,location,build_id,order_id,source,reason
+E1,E1,2026-01-01T00:00:00Z,adjustment_in,controller,3,drawer,,,synthetic-count,initial count
+E2,E2,2026-01-01T00:00:00Z,adjustment_in,led,6,drawer,,,synthetic-count,initial count
+E3,E3,2026-01-02T00:00:00Z,reserve,controller,1,drawer,B-existing,,synthetic,
+E4,E4,2026-01-02T00:00:00Z,reserve,led,2,drawer,B-existing,,synthetic,

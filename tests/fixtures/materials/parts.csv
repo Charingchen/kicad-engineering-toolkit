@@ -1,0 +1,3 @@
+part_id,description,manufacturer,manufacturer_part_number,variant_or_revision,unit,source,verification_status
+controller,controller,Synthetic,TEST-controller,A,each,synthetic-fixture,unverified
+led,led,Synthetic,TEST-led,A,each,synthetic-fixture,unverified

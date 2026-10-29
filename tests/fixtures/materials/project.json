@@ -1,0 +1,19 @@
+{
+  "schema_version": "0.1-draft",
+  "workspace_revision": 7,
+  "project_id": "synthetic-materials",
+  "name": "Synthetic materials loop",
+  "goal": "Bookkeeping fixture only",
+  "active_bom_revision": "A",
+  "requirements": [],
+  "constraints": [],
+  "open_questions": [],
+  "stock_counts_verified": [
+    "controller",
+    "led"
+  ],
+  "spare_targets": {
+    "controller": 1
+  },
+  "evidence": []
+}

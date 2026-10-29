@@ -1,6 +1,6 @@
 # Roadmap
 
-All executable capabilities below are planned. The repository currently provides documentation and manual starter records.
+The first read-only slice of Milestone 1 is implemented: Python validation and build planning, a synthetic fixture, and focused automated tests. Other executable capabilities below remain planned; Milestone 1 is not complete.
 
 ## Milestone 0 — shared foundation
 
@@ -36,4 +36,4 @@ Completion means one real build has documented assembly, firmware, fit checks, e
 
 ## First implementation slice
 
-Start with `project.validate` and read-only `build.plan` against a synthetic fixture. They force clear data semantics and provide immediate value without mutating records. Then implement inventory transactions and build history before adding a transport layer.
+`project.validate` and read-only `build.plan` now run against the synthetic materials-loop fixture. See [Python core](python-core.md) for reproducible test/demo commands and remaining limitations. They preserve unknown stock, distinguish physical/reserved/free/incoming quantities, and do not modify records. Next implement inventory transactions with locking, crash recovery and replay protection, then build history before adding a transport layer.
