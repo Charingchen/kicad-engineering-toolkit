@@ -1,4 +1,4 @@
-"""Deterministic, read-only engineering operations; no CAD or transport dependency."""
-from . import build, project
+"""Deterministic engineering operations; no CAD or transport dependency."""
+from . import build, project, inventory
 
-__all__ = ["build", "project"]
+__all__ = ["build", "project", "inventory"]

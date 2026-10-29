@@ -1,6 +1,6 @@
 # Manual project template
 
-Status: draft record format supported by the read-only [Python validator and planner](../../docs/python-core.md). Record changes are still manual.
+Status: draft record format supported by the read-only [Python validator and planner](../../docs/python-core.md). Inventory changes can use [preview/apply and recovery](../../docs/inventory-transactions.md); other record changes are still manual.
 
 Copy this directory into a private project workspace. Use a stock ledger shared by projects when they share physical inventory; never duplicate the same stock into independent project balances. See [architecture](../../docs/architecture.md) for proposed semantics.
 
@@ -28,7 +28,7 @@ The empty files represent **no data entered**, not verified zero stock. In `proj
 - Order `status`: `planned`, `ordered`, `partially_received`, `received`, or `cancelled`. Planned requests do not count as incoming. Status must agree with receipts and cancellations; keep partially cancelled unreceived quantities explicit.
 - Build records require `build_id`, `bom_revision`, and `status`. Build `status`: `planned`, `reserved`, `assembled`, `tested`, or `retired`. Assembled does not imply tests passed. Record test outcomes separately.
 - BOM revisions are project-scoped. Once used by a physical build, keep that revision intact and create a new one for changes.
-- Use `workspace_revision` as an increasing integer. Atomic updates, replay protection, and revision checking are future implementation work; manual editing does not enforce them.
+- Use `workspace_revision` as an increasing integer. Inventory transactions enforce revision checks and replay protection. After first apply, do not manually edit the ledger; preserve hidden transaction state with backups. Manual edits to other records require a quiescent workspace.
 
 ## First manual pass
 

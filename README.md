@@ -4,7 +4,7 @@ An agent-oriented workspace for starting, managing, and resuming small hardware 
 
 The goal is to let an individual maker describe what they want to build, then work with an AI agent that follows engineering practices and maintains durable project records: requirements, decisions, BOM revisions, purchases, parts locations, and prototype history. KiCad is one planned integration within that workflow.
 
-**Status: first read-only Python core implemented.** `project.validate` and `build.plan` run against the file records, with a synthetic fixture and focused tests. Record-writing operations, CLI, MCP, CAD integration, and validated hardware designs remain planned. See the [Python core guide](docs/python-core.md) for reproducible commands and limitations.
+**Status: Python validation, planning, and inventory transactions implemented.** `project.validate` and `build.plan` run against the file records, with a synthetic fixture and focused tests. `inventory.record` previews and explicitly applies events with replay protection and recovery; see [inventory transactions](docs/inventory-transactions.md). Other record writers, CLI, MCP, CAD integration, and validated hardware designs remain planned. See the [Python core guide](docs/python-core.md) for reproducible commands and limitations.
 
 ## The problem
 
