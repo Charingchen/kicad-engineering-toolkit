@@ -1,6 +1,6 @@
 # Acceptance scenarios for the first implementation
 
-The read-only validation and planning portions now have automated tests in `tests/test_core.py`; see [Python core](python-core.md) for commands. Transaction replay, mutation workflows, and resume remain future specifications. All parts and quantities here are synthetic bookkeeping examples, not a wiring or hardware recommendation.
+The read-only validation and planning portions now have automated tests in `tests/test_core.py`; see [Python core](python-core.md) for commands. Inventory transaction and recovery scenarios are tested in `tests/test_inventory.py`. Other mutation workflows and resume remain future specifications. All parts and quantities here are synthetic bookkeeping examples, not a wiring or hardware recommendation.
 
 ## Two prototypes and a spare
 
@@ -19,7 +19,7 @@ The synthetic fixture in `tests/fixtures/materials-loop` implements these starti
 
 ## Partial receipt and replay
 
-Receipt arithmetic and order reconciliation are tested against manually constructed records. Recording/replaying transactions is not implemented yet.
+Receipt arithmetic and order reconciliation are tested against manually constructed records. Recording/replaying inventory events is now tested, including automatic order status reconciliation and interrupted-write recovery.
 
 Order four controllers. Receive one under a unique operation ID. Physical stock rises by one; outstanding incoming quantity is three. Replay the identical operation: neither value changes. Reuse its ID for quantity two: reject the conflict. An over-receipt is rejected. An expected arrival date passing does not add stock.
 
