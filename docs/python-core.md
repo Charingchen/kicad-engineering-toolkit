@@ -1,6 +1,6 @@
-# Read-only Python core
+# Python core
 
-Implemented in the first Milestone 1 slice: `project.validate` and `build.plan`.
+Implemented: `project.validate`, `build.plan`, and the [inventory transaction APIs](inventory-transactions.md).
 Python 3.10 or newer is required. Runtime and tests use only the standard library;
 no KiCad, network, supplier account, or AI service is needed.
 
@@ -75,7 +75,7 @@ readiness today. Unknown arrival dates remain in `unknowns`.
 - Event IDs are unique. Operation IDs are unique except a two-event move:
   one adjustment out and one adjustment in with equal part/quantity and different
   locations. A repeated persisted receipt/reservation/consumption operation is
-  rejected rather than counted twice. Transaction replay APIs are not implemented.
+  rejected rather than counted twice. Inventory transaction replay is now implemented through [inventory.record](inventory-transactions.md).
 - Incoming is ordered minus cancelled minus receipts. Planned orders contribute
   nothing. Status must reconcile: `ordered` has no receipts and a positive
   outstanding balance; `partially_received` has receipts and outstanding balance;
@@ -87,13 +87,12 @@ readiness today. Unknown arrival dates remain in `unknowns`.
 The synthetic fixture and focused tests cover the documented planning arithmetic,
 partial receipts, reservations, release/consumption, moves, invalid inputs,
 unknown versus zero stock, BOM selection, and unchanged record bytes and mtimes.
-They do not demonstrate a transaction writer, idempotent mutation API, BOM revision
-writer, as-built recorder, resume operation, CLI, MCP, or physical hardware.
+The read-only tests do not demonstrate a BOM revision writer, as-built recorder, resume operation, CLI, MCP, or physical hardware.
 
 Both operations only read files. They do not lock files or offer a coherent snapshot
 against concurrent manual edits. The fingerprint identifies the bytes read; it is
 not a concurrency guarantee. Use a stable checkout/workspace while validating or
-planning. Mutation locking and crash recovery must be implemented before writers.
+planning. Inventory writers now use the separate [transaction contract](inventory-transactions.md); readers reject pending transactions and changed transaction generations.
 Engineering suitability, source authenticity, and physical counts remain manual
 responsibilities. No component equivalence or project-specific rules are inferred.
 

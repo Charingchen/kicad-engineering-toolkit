@@ -5,6 +5,7 @@ import io
 import json
 from datetime import date, datetime
 from pathlib import Path
+from . import _transactions as tx
 
 HEADERS = {
     "parts.csv": "part_id,description,manufacturer,manufacturer_part_number,variant_or_revision,unit,source,verification_status",
@@ -29,11 +30,18 @@ def _integer(value, minimum=0):
 def _load(workspace):
     root = Path(workspace)
     records, issues = {}, []
+    try:
+        generation = tx.marker(root)
+    except (OSError, tx.TransactionError) as exc:
+        return {}, [{"code": getattr(exc, "code", "INVALID_RECORD"), "record": "workspace", "message": str(exc)}], ""
+    ledger = None
     digest = hashlib.sha256()
     for name in FILES:
         try:
             raw = (root / name).read_bytes()
             digest.update(name.encode() + b"\0" + raw + b"\0")
+            if name == "inventory-events.csv":
+                ledger = raw
             text = raw.decode("utf-8-sig")
             if name.endswith(".json"):
                 records[name] = json.loads(text)
@@ -51,6 +59,13 @@ def _load(workspace):
                 records[name] = text
         except (OSError, UnicodeError, ValueError, csv.Error) as exc:
             issues.append({"code": "INVALID_RECORD", "record": name, "message": str(exc)})
+    try:
+        if tx.marker(root) != generation:
+            raise tx.TransactionError("REVISION_CONFLICT", "Workspace generation changed while reading")
+        if ledger is not None:
+            tx.state(generation, ledger)
+    except (OSError, tx.TransactionError) as exc:
+        issues.append({"code": getattr(exc, "code", "INVALID_RECORD"), "record": "workspace", "message": str(exc)})
     return records, issues, digest.hexdigest()
 
 

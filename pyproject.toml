@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "kicad-engineering-toolkit"
 version = "0.1.0"
-description = "Read-only engineering workspace validation and materials planning"
+description = "Engineering workspace validation, materials planning and inventory transactions"
 requires-python = ">=3.10"
 license = {text = "MIT"}
 
